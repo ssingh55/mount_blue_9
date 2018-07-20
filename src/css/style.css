@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font-size: 16px;
+  background-color: #66CCFF;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.strike{
+  text-decoration: line-through;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+}
