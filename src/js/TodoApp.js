@@ -10,6 +10,7 @@ export default class TodoApp extends Component {
             items: []
         };
         this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     addItem(e) {
@@ -17,9 +18,8 @@ export default class TodoApp extends Component {
             var newItem = {
                 text: this.inputElement.value,
                 key: Date.now(),
-                isCompleted: false
+                isDone: false
             };
-            console.log(newItem)
             this.setState((prevState) => {
                 return {
                     items: prevState.items.concat(newItem)
@@ -29,9 +29,29 @@ export default class TodoApp extends Component {
             });
             this.inputElement.value = "";
         }
-
-        // console.log(this.state);
+        // console.log(this.state.items);
         e.preventDefault();
+    }
+
+    deleteItem(key) {
+        // var filteredItems = this.state.items.filter(function (item) {
+        //   return (item.key !== key);
+        // });
+        var temp = this.state.items
+        for(var i=0;i<temp.length;i++)
+        {   
+            if(item.key===key)
+                temp.splice(i, 1)
+        }
+        console.log(temp)
+        this.setState({
+            items: temp
+            // items: filteredItems
+        });
+    }
+
+    checkItem(e) {
+
     }
 
     render() {
@@ -43,7 +63,7 @@ export default class TodoApp extends Component {
                         <button type="submit">Add</button>
                     </form>
                 </div>
-                <TodoItems entries={this.state.items} />
+                <TodoItems entries={this.state.items} delete={this.deleteItem} checkItem={this.checkItem} />
             </div>
         );
     }

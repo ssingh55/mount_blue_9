@@ -14,34 +14,4 @@ export default class TodoListApp extends Component {
   }
 }
 
-
-
-/*
-function AddItem(){
-  return (
-    React.createElement(
-      "form",
-      { className: "form" },
-      React.createElement("input", { type: "text", placeholder: "enter your todo" }),
-      React.createElement("input", { type: "submit", value: "Add", onClick: add })
-    )
-  )
-}
-
-function add(){
-  return(
-    React.createElement(
-      "ul",
-      null,
-      React.createElement(
-        "li",
-        null,
-        "redhat"
-      )
-    )
-  )
-}
-*/
-
-
 render(<TodoListApp />, document.getElementById('container'));
