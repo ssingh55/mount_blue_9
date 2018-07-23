@@ -40,8 +40,11 @@ export default class TodoApp extends Component {
         var temp = this.state.items
         for(var i=0;i<temp.length;i++)
         {   
-            if(item.key===key)
-                temp.splice(i, 1)
+            if(temp[i].key===key)
+                {
+                    temp.splice(i, 1)
+                    break;
+                }
         }
         console.log(temp)
         this.setState({
