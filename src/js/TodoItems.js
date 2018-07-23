@@ -11,28 +11,15 @@ export default class TodoItems extends Component {
         this.props.delete(key);
     }
 
-    checkItem(child,e){
-        let itemChecked = this.state.itemChecked;
-        itemChecked[child.id] = e.target.checked;
-        this.setStart({itemChecked:itemChecked})
-    }
-
-    renderItem(child){
-        .
-        .
-        let renderedChildren;
-        if(this.state.itemChecked[child.id]){
-            renderedChildren = this.renderChildren(child.children);
-        }
-        return (<li> .....{renderedChildren})
+    checkItem(item,e){
+        this.props.checkItem(item,e);
     }
     
-
     createTasks(item) {
         return (
             <li key={item.key}>
-                <input type='checkbox' onchange={(e) => this.checkItem(item,e)} />
-                <span style={{ 'textDecoration': item.isDone ? 'line-through' : 'none' }}>
+                <input type='checkbox' onChange={(e) => this.checkItem(item,e)} />
+                <span /*onClick={(e) => this.checkItem(item,e)}*/ style={{ 'textDecoration': item.isDone ? 'line-through' : 'none' }}>
                     {item.text}
                 </span>
                 <button onClick={()=>this.delete(item.key)}>X</button>
