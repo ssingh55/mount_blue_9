@@ -79,7 +79,7 @@ export default class TodoApp extends Component {
         return (
             <div className="todoListMain">
                 <div className="header">
-                    <form onSubmit={this.addItem}>
+                    <form onSubmit={this.addItem} method="POST">
                         <input type="text" ref={(item) => this.inputElement = item} placeholder="Enter your todo" />
                         <button type="submit">Add</button>
                     </form>
