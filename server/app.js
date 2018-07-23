@@ -6,6 +6,7 @@ var path = require('path');
 
 app.use(express.static(path.resolve('../src')));
 app.use(express.static(path.resolve('../dist')));
+
 app.get('/',(req,res)=>{
     res.sendFile(path.resolve('index.html'));
 })
