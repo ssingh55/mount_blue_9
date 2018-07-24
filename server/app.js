@@ -27,7 +27,7 @@ app.get('/api/todos', (req, res) => {
 
 //add a new data
 app.post('/api/todos', async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     // var todo = new todoModule(req.body);
     // todo.save();
     var bodyData = await req.body;
@@ -46,11 +46,13 @@ app.delete('/api/todos/:id', (req, res) => {
 
 //update a data
 app.put('/api/todos/:id', async (req, res) => {
-    var bodyData = await req.body.isDone;
-    todoModule.findOneAndUpdate({ key: req.params.id }, {$set:{isDone:bodyData}}).then(function () {
-        todoModule.findOne({ key: req.params.id }).then(function (data) {
+    var bodyData = await req.body;
+    console.log(bodyData.checked);
+    
+    todoModule.findOneAndUpdate({ key: req.params.id }, {$set:{isDone:bodyData.checked}}).then(function (data) {
+        // todoModule.findOne({ key: req.params.id }).then(function (data) {
             res.send(data)
-        })
+        // })
     })
 })
 

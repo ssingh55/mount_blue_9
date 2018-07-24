@@ -73,7 +73,7 @@ export default class TodoApp extends Component {
         }, function () {
             fetch('/api/todos/' + childItem.key, {
                 method: 'PUT',
-                body: JSON.stringify(this.state.items),
+                body: JSON.stringify({checked:childItem.isDone}),
                 headers: { 'Content-Type': 'application/json' }
             })
         });
