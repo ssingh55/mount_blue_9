@@ -5,13 +5,24 @@ import TodoItems from "./TodoItems";
 export default class TodoApp extends Component {
     constructor() {
         super();
-        
         this.state = {
             items: []
         };
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.checkItem = this.checkItem.bind(this)
+    }
+
+    componentDidMount() {
+        fetch('/api/todos')
+            .then(function (data) {
+                return data.json();
+            })
+            .then((myJson) => {
+                this.setState({
+                    items: myJson
+                })
+            })
     }
 
     addItem(e) {
@@ -25,30 +36,42 @@ export default class TodoApp extends Component {
                 return {
                     items: prevState.items.concat(newItem)
                 };
-            }, function() {
-                // console.log(this.state.items);
+            }, function () {
+                //mongodb add item part
+                fetch('/api/todos', {
+                    method: 'POST',
+                    body: JSON.stringify(this.state.items),
+                    headers: { 'Content-Type': 'application/json' }
+                })
             });
             this.inputElement.value = "";
         }
-        // console.log(this.state.items);
         e.preventDefault();
     }
 
     deleteItem(key) {
-        // var filteredItems = this.state.items.filter(function (item) {
-        //   return (item.key !== key);
-        // });
-        var temp = this.state.items
-        for (var i = 0; i < temp.length; i++) {
-            if (temp[i].key === key) {
-                temp.splice(i, 1)
-                break;
-            }
-        }
+        // var temp = this.state.items;
+        // var filteredItems = temp.filter(function (item) {
+        var filteredItems = this.state.items.filter(function (item) {
+            return (item.key !== key);
+        });
+        // var temp = this.state.items
+        // for (var i = 0; i < temp.length; i++) {
+        //     if (temp[i].key === key) {
+        //         temp.splice(i, 1)
+        //         break;
+        //     }
+        // }
         // console.log(temp)
         this.setState({
-            items: temp
-            // items: filteredItems
+            // items: temp
+            items: filteredItems
+        }, function () {
+            //delete item from mongodb
+            fetch('/api/todos/' + key, {
+                method: 'DELETE'
+            })
+                .then(response => response.json());
         });
     }
 
@@ -62,17 +85,15 @@ export default class TodoApp extends Component {
         });
         this.setState({
             items: itemChecked
+        }, function () {
+            //check and update item into mongodb
+            fetch('/api/todos/' + childItem.key, {
+                method: 'PUT',
+                body: JSON.stringify(this.state.items),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            // .then(response => response.json());
         });
-        // console.log(this.state.items)
-        // let itemChecked = this.state.items;
-        // console.log(childItem)
-        // for (var i = 0; i < itemChecked.length; i++) {
-        //     if (itemChecked[i].key === childItem.key) {
-        //         itemChecked[i].isDone = e.target.checked;
-        //         break;
-        //     }
-        // }
-        this.setState({ items: itemChecked })
     }
 
     render() {

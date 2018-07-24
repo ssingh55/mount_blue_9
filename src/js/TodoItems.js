@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class TodoItems extends Component {
     constructor(props){
         super(props);
-
         this.createTasks = this.createTasks.bind(this)
     }
 
@@ -29,7 +28,6 @@ export default class TodoItems extends Component {
     // onClick={(e)=>{e.target.parentNode.remove();}}
     render() {
         var todoEntries = this.props.entries;
-        // console.log(todoEntries)
         var listItems = todoEntries.map(this.createTasks);
         return (
             <ul className="itemList">
