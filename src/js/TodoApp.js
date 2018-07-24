@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { render } from 'react-dom';
 import TodoItems from "./TodoItems";
 
 export default class TodoApp extends Component {
@@ -37,7 +36,6 @@ export default class TodoApp extends Component {
                     items: prevState.items.concat(newItem)
                 };
             }, function () {
-                //mongodb add item part
                 fetch('/api/todos', {
                     method: 'POST',
                     body: JSON.stringify(this.state.items),
@@ -50,24 +48,12 @@ export default class TodoApp extends Component {
     }
 
     deleteItem(key) {
-        // var temp = this.state.items;
-        // var filteredItems = temp.filter(function (item) {
         var filteredItems = this.state.items.filter(function (item) {
             return (item.key !== key);
         });
-        // var temp = this.state.items
-        // for (var i = 0; i < temp.length; i++) {
-        //     if (temp[i].key === key) {
-        //         temp.splice(i, 1)
-        //         break;
-        //     }
-        // }
-        // console.log(temp)
         this.setState({
-            // items: temp
             items: filteredItems
         }, function () {
-            //delete item from mongodb
             fetch('/api/todos/' + key, {
                 method: 'DELETE'
             })
@@ -79,20 +65,17 @@ export default class TodoApp extends Component {
         var itemChecked = this.state.items.map((item) => {
             if (item.key === childItem.key) {
                 item.isDone = !item.isDone;
-                // item.isDone = e.target.checked;
             }
             return item
         });
         this.setState({
             items: itemChecked
         }, function () {
-            //check and update item into mongodb
             fetch('/api/todos/' + childItem.key, {
                 method: 'PUT',
                 body: JSON.stringify(this.state.items),
                 headers: { 'Content-Type': 'application/json' }
             })
-            // .then(response => response.json());
         });
     }
 

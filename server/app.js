@@ -46,11 +46,9 @@ app.delete('/api/todos/:id', (req, res) => {
 
 //update a data
 app.put('/api/todos/:id', async (req, res) => {
-    // console.log(req.body[0].isDone)
     var bodyData = await req.body.isDone;
     todoModule.findOneAndUpdate({ key: req.params.id }, {$set:{isDone:bodyData}}).then(function () {
         todoModule.findOne({ key: req.params.id }).then(function (data) {
-            // console.log(data)
             res.send(data)
         })
     })
